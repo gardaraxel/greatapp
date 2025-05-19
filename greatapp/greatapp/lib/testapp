@@ -88,7 +88,7 @@ class _MyCoolTimingAppState extends State<MyCoolTimingApp> {
     return Scaffold(
       appBar: AppBar(title: Text('Tíma Skráning')),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Row(
@@ -97,7 +97,7 @@ class _MyCoolTimingAppState extends State<MyCoolTimingApp> {
                   child: TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      labelText: 'Nafn á verkefni',
+                      labelText: 'Skrifaðu verkefna nafn',
                     ),
                   ),
                 ),

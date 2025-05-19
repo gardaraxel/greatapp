@@ -1,53 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'time_keeper.dart';
 
-void main() => runApp(TimaSkraning());
-
-class TimaSkraning extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TímaSkráning',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        useMaterial3: true,
-      ),
-      home: MyCoolTimingApp(),
-    );
-  }
-}
-
-class TimeKeeper {
-  late final String name;
-  Duration elapsed = Duration.zero;
-  DateTime? _startTime;
-  bool get isRunning => _startTime != null;
-
-  void start() {
-    _startTime = DateTime.now();
-  }
-
-  void stop() {
-    if (_startTime != null) {
-      elapsed += DateTime.now().difference(_startTime!);
-      _startTime = null;
-    }
-  }
-
-  String formattedTime() {
-    final total = isRunning ? elapsed + DateTime.now().difference(_startTime!) : elapsed;
-    return total.toString().split('.').first; // Sýnir tíma sem HH:MM:SS
-  }
-}
-//Main Screen For App
 class MyCoolTimingApp extends StatefulWidget {
   @override
   _MyCoolTimingAppState createState() => _MyCoolTimingAppState();
 }
 
 class _MyCoolTimingAppState extends State<MyCoolTimingApp> {
-  final TextEditingController _controller = TextEditingController(); //Input frá notanda
+  final TextEditingController _controller = TextEditingController();
   final List<TimeKeeper> _timeKeepers = [];
   Timer? _uiTimer;
 
@@ -96,15 +57,13 @@ class _MyCoolTimingAppState extends State<MyCoolTimingApp> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: InputDecoration(
-                      labelText: 'Nafn á verkefni',
-                    ),
+                    decoration: InputDecoration(labelText: 'Nafn á verkefni'),
                   ),
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: _addTimeKeeper,
-                  child: Text('Nýtt verkefni'),
+                  child: Text('Stofna nýtt verkefni'),
                 ),
               ],
             ),
@@ -117,7 +76,9 @@ class _MyCoolTimingAppState extends State<MyCoolTimingApp> {
                   return Card(
                     child: ListTile(
                       title: Text(timeKeeper.name),
-                      subtitle: Text('Unninn tími: ${timeKeeper.formattedTime()}'),
+                      subtitle: Text(
+                        'Unninn tími: ${timeKeeper.formattedTime()}',
+                      ),
                       trailing: IconButton(
                         icon: Icon(
                           timeKeeper.isRunning ? Icons.stop : Icons.play_arrow,
